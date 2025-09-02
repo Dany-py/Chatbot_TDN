@@ -67,7 +67,8 @@ uvicorn main:app --reload
 │   ├── 📁 model/                   # Modèles de données
 │   │   ├── 🐍 __init__.py
 │   │   └── 🐍 chat_model.py         # Interactions du chatbot
-│   ├── 📁 routes/                  # Définition des routes│   │   ├── 🐍 __init__.py
+│   ├── 📁 routes/                  # Définition des routes
+│   ├── 🐍 __init__.py
 │   │   ├── 🐍 chat.py               # Routes liées au chatbot
 │   │   └── 🐍 home.py               # Route principale
 │   ├── 🐍 __init__.py
