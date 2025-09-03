@@ -25,6 +25,7 @@ Ce projet est conçu pour être rapide, modulaire et facilement extensible.
 
 - Python 3.9 ou supérieur
 - `pip` (gestionnaire de paquets Python)
+- Postgresql-16
 
 ### Étapes
 
@@ -53,8 +54,8 @@ pip install -r requirements.txt
 ```sh
 uvicorn main:app --reload
 ```
-
-- Accès API : [http://127.0.0.1:8000/api/](http://127.0.0.1:8000/api/)
+- Accès home page : [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
+- Accès chatbot : [http://127.0.0.1:8000/chat/](http://127.0.0.1:8000/chat/)
 - Documentation Swagger : [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
 - Documentation ReDoc : [http://127.0.0.1:8000/redoc](http://127.0.0.1:8000/redoc)
 

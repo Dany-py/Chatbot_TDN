@@ -407,7 +407,11 @@
     // Function to handle WebSocket communication
     function postMessage(message) {
         if (!socket || socket.readyState !== WebSocket.OPEN) {
-            socket = new WebSocket("ws://chatbot-tdn.onrender.com/api/ws/chat");
+            
+            const loc = window.location;
+            let wsProtocol = (loc.protocol === "https:") ? "wss:" : "ws:";
+            socket = new WebSocket(`${wsProtocol}//${loc.host}/api/ws/chat`);
+            
 
             socket.onopen = () => {
                 console.log("Successful connection to FastAPI WebSocket!");
