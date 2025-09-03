@@ -1,8 +1,7 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
 from fastapi.middleware.cors import CORSMiddleware
-from src.routes import chat, home
+from src.routes import chat, home, content
 
 
 
@@ -24,3 +23,4 @@ app.add_middleware(
 # Inclure les routeurs
 app.include_router(home.router)
 app.include_router(chat.router)
+app.include_router(content.router)

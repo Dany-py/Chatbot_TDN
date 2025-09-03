@@ -10,6 +10,6 @@ async def read_root(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
 
-@router.get("/api/", response_class=HTMLResponse)
+@router.get("/chat/", response_class=HTMLResponse)
 async def read_root(request: Request):
     return templates.TemplateResponse("page.html", {"request": request})

@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Messagerie</title>
+    <link rel="icon" type="image/webp" href="../static/img/LogoTDN.webp" />
+    <title>Chatbot TDN</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css" rel="stylesheet">
     <style>
@@ -254,7 +255,7 @@
                     <span class="online-indicator"></span>
                 </div>
                 <div>
-                    <h5 class="m-0">Utilisateur</h5>
+                    <h5 class="m-0 user"></h5>
                     <!--<small class="text-white-50">En ligne</small>-->
                 </div>
                 <span class="ms-auto">
@@ -278,10 +279,9 @@
                         </div>
                         <div class="flex-grow-1">
                             <div class="d-flex justify-content-between align-items-center">
-                                <h6 class="mb-0">Bernard</h6>
-                                <small class="text-white-50">12:30</small>
+                                <h6 class="mb-0" id="user"></h6>
                             </div>
-                            <small class="text-white-50 d-block">Bonjour ! Comment ça va ?</small>
+                            <small class="text-white-50 d-block" id="user-message"></small>
                         </div>
                     </div>
                 </li>
@@ -298,7 +298,7 @@
                 
                 <div class="position-relative me-3">
                     <img id="current-contact-avatar" 
-                         src="../static/img/man.png" 
+                         src="../static/img/LogoTDN.webp" 
                          alt="Avatar du contact" 
                          class="rounded-circle avatar">
                     <!--<span class="online-indicator"></span>-->
@@ -362,9 +362,14 @@
 <script>
     // Variable to hold the WebSocket connection
     let socket = null;
+    let userClass = document.querySelector(".user")
+    let user = document.querySelector("#user")
 
+    let userMessage = document.querySelector("#user-message")
     // Create and get the UUID right away
     const user_UUID = createUUID();
+    user.innerText = user_UUID
+    userClass.innerText = user_UUID
 
     // Get DOM elements
     const form = document.querySelector("#message-form");
@@ -445,6 +450,7 @@
         messageDiv.className = `message ${className}`;
         messageDiv.innerHTML = `<div class="mb-1">${text}</div>`;
         messageContainer.appendChild(messageDiv);
+        userMessage.innerText = text
         scrollToBottom();
     }
 

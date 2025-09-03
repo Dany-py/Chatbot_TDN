@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/webp" href="../static/img/LogoTDN.webp" />
+    <title>DB Content</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        table {
+            position: absolute;
+            top: 0;
+            margin-top: 2em;
+            padding: 2em;
+            border-radius: 8px;
+            width: 80%;
+            border-collapse: collapse;
+            background: white;
+            overflow-y: auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        th {
+            background: #007bff;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Question</th>
+                <th>Réponse</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody id="table-body">
+        </tbody>
+    </table>
+    
+    <!-- Stocke les données JSON dans un script dédié -->
+    <script id="test-data" type="application/json">
+        {{ test_data | tojson }}
+    </script>
+    <script>
+        // Récupère et parse les données de façon sûre
+        const testData = JSON.parse(document.getElementById("test-data").textContent);
+        // Stocker les données dans le localStorage
+        localStorage.setItem("chatData", JSON.stringify(testData));
+        // Fonction pour remplir le tableau
+        function populateTable() {
+            const tbody = document.getElementById("table-body");
+            testData.forEach(item => {
+                let row = document.createElement("tr");
+                let idCell = document.createElement("td");
+                idCell.textContent = item.id;
+                let questionCell = document.createElement("td");
+                questionCell.textContent = item.question;
+                let responseCell = document.createElement("td");
+                responseCell.textContent = item.response;
+                let dateCell = document.createElement("td");
+                dateCell.textContent = item.date;
+                row.appendChild(idCell);
+                row.appendChild(questionCell);
+                row.appendChild(responseCell);
+                row.appendChild(dateCell)
+                tbody.appendChild(row);
+            });
+        }
+        function scrollToTable() {
+            const table = document.querySelector("table");
+            if (table) {
+                window.scrollTo({ top: table.offsetTop, behavior: "smooth" });
+            }
+        }
+        scrollToTable();
+        populateTable()
+    </script>
+    
+</body>
+</html>
