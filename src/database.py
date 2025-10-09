@@ -9,8 +9,6 @@ load_dotenv()  # Charge les variables depuis le fichier .env
 db_url = os.getenv("DATABASE_URL")
 
 
-#DATABASE_URL = "postgresql+asyncpg://postgres:040501@localhost:5432/chatbot_tdn"
-
 # Création du moteur asynchrone
 engine = create_async_engine(db_url, echo=True)
 
