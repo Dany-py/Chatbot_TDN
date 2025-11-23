@@ -77,7 +77,7 @@ def run_migrations_online() -> None:
         poolclass=pool.NullPool,
     )
 
-    if connectable.url.drivername.startswith("asyncpg") or connectable.url.drivername.startswith("aiosqlite"):
+    if connectable.url.drivername.startswith("postgresql+asyncpg"):
         # C'est une connexion ASYNCHRONE, nous devons utiliser asyncio.run
         print("Running migrations in async mode...")
         asyncio.run(run_async_migrations(connectable))
