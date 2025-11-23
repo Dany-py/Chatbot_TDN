@@ -1,9 +1,11 @@
 from logging.config import fileConfig
 import os
+import asyncio
 from dotenv import load_dotenv
 
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
+from sqlalchemy.engine import url
 
 from alembic import context
 
@@ -75,14 +77,37 @@ def run_migrations_online() -> None:
         poolclass=pool.NullPool,
     )
 
+    if connectable.url.drivername.startswith("asyncpg") or connectable.url.drivername.startswith("aiosqlite"):
+        # C'est une connexion ASYNCHRONE, nous devons utiliser asyncio.run
+        print("Running migrations in async mode...")
+        asyncio.run(run_async_migrations(connectable))
+    else:
+        # C'est une connexion synchrone normale
+        print("Running migrations in sync mode...")
+        with connectable.connect() as connection:
+            context.configure(
+                connection=connection, target_metadata=target_metadata
+            )
+
+            with context.begin_transaction():
+                context.run_migrations()
+"""
     with connectable.connect() as connection:
         context.configure(
             connection=connection, target_metadata=target_metadata
         )
 
         with context.begin_transaction():
-            context.run_migrations()
+            context.run_migrations()"""
 
+# Nouvelle fonction asynchrone
+async def run_async_migrations(connectable):
+    """Async run migrations in 'online' mode."""
+    async with connectable.begin() as connection:
+        context.configure(
+            connection=connection, target_metadata=target_metadata
+        )
+        await connection.run_sync(context.run_migrations)
 
 if context.is_offline_mode():
     run_migrations_offline()
