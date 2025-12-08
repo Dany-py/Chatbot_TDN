@@ -5,14 +5,14 @@ import schedule
 import time
 
 render_links = [
-    "https://danymeteo.onrender.com/Meteo/",
+    "https://chatbot-tdn.onrender.com/", "https://danymeteo.onrender.com/Meteo/",
 ]
 
 def reload(urls):
     results = {}
     for url in urls:
         try:
-            res = requests.get(url, timeout=10) 
+            res = requests.get(url, timeout=14) 
             results[url] = res.status_code == 200
             print(f"Ping réussi pour {url}. Statut: {res.status_code}")
         except requests.RequestException as e:
@@ -22,7 +22,7 @@ def reload(urls):
 
 
 # Appel récurant de la fonction reload
-schedule.every(10).minutes.do(reload, urls = render_links)
+schedule.every(14).minutes.do(reload, urls = render_links)
 
 while True:
     schedule.run_pending() #Vérification et exécution de tâche.
